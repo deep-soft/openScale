@@ -34,7 +34,7 @@ public class BluetoothBeurerBY90 extends BluetoothStandardWeightProfile {
 
     @Override
     protected int getVendorSpecificMaxUserCount() {
-        return 0;
+        return 1;
     }
 
     @Override
