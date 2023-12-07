@@ -168,16 +168,13 @@ jobs:
         #set -x
         mkdir -p ./signed-apk
         echo "LIST: ./app/build/outputs/apk/release/"
-        ls -l ./app/build/outputs/apk/release/
-        mv openScale-${{ env.PRG_VERSION }}-release-unsigned.apk mv openScale-${{ env.PRG_VERSION }}-release.apk
-        cp ./app/build/outputs/apk/release/*.apk ./signed-apk/
-        ls -lR ./app/build/outputs/
-        pushd ./signed-apk/
+        ls -l ./app/build/outputs/apk/release/ || true;
+        mv openScale-${{ env.PRG_VERSION }}-release-unsigned.apk openScale-${{ env.PRG_VERSION }}-release.apk || true;
+        cp ./app/build/outputs/apk/release/*.apk ./signed-apk/ || true;
+        ls -lR ./app/build/outputs/ || true;
+        pushd ./signed-apk/ || true;
         echo "LIST: ./"
         ls -l ./
-        #mv "openScale-androidFull-opengl-arm64-release-unsigned.apk" "openScale-androidFull-opengl-arm64-release.apk"
-        #mv "${{ env.PRG_NAME }}-${{ env.PRG_TYPE }}-unsigned.apk" "${{ env.PRG_NAME }}-${{ env.PRG_VERSION }}-${{ env.PRG_TYPE }}-${{ env.TAG_BUILD }}.apk"
-        #ls -l ./
         popd
 
     - uses: deep-soft/sign-android-release@master
