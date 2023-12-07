@@ -170,7 +170,9 @@ jobs:
         mkdir -p ./signed-apk
         echo "LIST: ./app/build/outputs/apk/release/"
         ls -l ./app/build/outputs/apk/release/ || true;
+        pushd ./app/build/outputs/apk/release/
         mv openScale-${{ env.VERSION }}-release-unsigned.apk openScale-${{ env.VERSION }}-release.apk || true;
+        popd
         cp ./app/build/outputs/apk/release/*.apk ./signed-apk/ || true;
         ls -lR ./app/build/outputs/ || true;
         pushd ./signed-apk/ || true;
