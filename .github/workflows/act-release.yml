@@ -148,7 +148,6 @@ jobs:
       run: printf "\norg.gradle.jvmargs=-Xmx2048m \n" >> gradle.properties
 
     - name: gradle build (v2)
-      working-directory: ./android_app/
       uses: gradle/gradle-build-action@v2
 
     - name: gradle  Assemble AndroidFull Release
@@ -182,12 +181,11 @@ jobs:
 
     - uses: deep-soft/sign-android-release@master
       continue-on-error: true
-      working-directory: ./android_app/
       name: Sign app APK
       if: env.ANDROID_SIGNING_KEY != null
       id: sign-openScale
       with:
-        releaseDirectory: ./signed-apk
+        releaseDirectory: ./android_app/signed-apk
         signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
         alias:            ${{ secrets.ANDROID_ALIAS }}
         keyStorePassword: ${{ secrets.ANDROID_KEY_STORE_PASSWORD }}
@@ -199,7 +197,6 @@ jobs:
     - name: Publish signed apk package
       if: env.ANDROID_SIGNING_KEY != null
       continue-on-error: true
-      working-directory: ./android_app/
       uses: deep-soft/action-gh-release@v1
       with:
         # draft: true
@@ -211,28 +208,25 @@ jobs:
     - name: Publish unsigned apk package
       if: env.ANDROID_SIGNING_KEY == null
       continue-on-error: true
-      working-directory: ./android_app/
       uses: deep-soft/action-gh-release@v1
       with:
         draft: true
         tag_name: ${{ env.TAG_VERSION }}${{ env.TAG_BUILD }}
         files: |
-            ./build/outputs/apk/release/*.apk"
+            ./android_app/build/outputs/apk/release/*.apk"
 
     - name: Archive APK
       continue-on-error: true
-      working-directory: ./android_app/
       uses: deep-soft/upload-artifact@v3
       with:
         name: release
-        path: ./build/outputs/apk/release/*.apk
+        path: ./android_app/build/outputs/apk/release/*.apk
         retention-days: 90
 
 # zip release begin
     - name: Create Archive ALL
       if:  ${{ inputs.archive_ALL}}
       continue-on-error: true
-      working-directory: ./android_app/
       uses: deep-soft/zip-release@v2
       with:
         type: 'zip'
@@ -245,7 +239,6 @@ jobs:
     - name: Publish Archive ALL
       if:  ${{ inputs.archive_ALL}}
       continue-on-error: true
-      working-directory: ./android_app/
       uses: deep-soft/action-gh-release@v1
       with:
         draft: true
