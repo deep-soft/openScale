@@ -19,7 +19,7 @@ env:
   TAG_VERSION:  "openScale-v1.0.0"
   TAG_BUILD:    "-b"
   TAG_REF:      "0000000"
-  PRG_NAME:     "openScale"
+  PRG_NAME:     "openscale"
   PRG_TASK:     "assemble"
                  ## assemble, bundle
   PRG_FLAVOR:   "androidFull"
@@ -151,11 +151,9 @@ jobs:
     - name: gradle build (v2)
       uses: gradle/gradle-build-action@v2
 
-    - name: gradle  Assemble AndroidFull Release
+    - name: gradle ${{ env.PRG_TASK    }}${{ env.uPRG_TYPE  }}
       working-directory: ./android_app/
       run: |
-        # ./gradlew assembleAndroidFullOpenglFatRelease
-        #./gradlew assembleAndroidFullOpenglArm64Release
         #./gradlew "${{ env.PRG_TASK    }}${{ env.PRG_FLAVOR  }}${{ env.uPRG_OGL  }}${{ env.uPRG_ARCH  }}${{ env.uPRG_TYPE  }}"
         ./gradlew "${{ env.PRG_TASK    }}${{ env.uPRG_TYPE  }}"
 
@@ -171,7 +169,7 @@ jobs:
         echo "LIST: ./app/build/outputs/apk/release/"
         ls -l ./app/build/outputs/apk/release/ || true;
         pushd ./app/build/outputs/apk/release/
-        mv openScale-${{ env.VERSION }}-release-unsigned.apk openScale-${{ env.VERSION }}-release.apk || true;
+        mv ${{ env.PRG_NAME }}-${{ env.VERSION }}-release-unsigned.apk ${{ env.PRG_NAME }}-${{ env.VERSION }}.apk || true;
         popd
         cp ./app/build/outputs/apk/release/*.apk ./signed-apk/ || true;
         ls -lR ./app/build/outputs/ || true;
