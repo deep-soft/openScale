@@ -167,12 +167,12 @@ jobs:
       run: |
         #set -x
         mkdir -p ./signed-apk
-        echo "LIST: " ./build/outputs/apk/release/"
+        echo "LIST: ./build/outputs/apk/release/"
         ls -l ./build/outputs/apk/release/
         cp ./build/outputs/apk/release/*.apk ./signed-apk/
         ls -lR ./build/outputs/
         pushd ./signed-apk/
-        echo "LIST: " ./
+        echo "LIST: ./"
         ls -l ./
         #mv "openScale-androidFull-opengl-arm64-release-unsigned.apk" "openScale-androidFull-opengl-arm64-release.apk"
         #mv "${{ env.PRG_NAME }}-${{ env.PRG_TYPE }}-unsigned.apk" "${{ env.PRG_NAME }}-${{ env.PRG_VERSION }}-${{ env.PRG_TYPE }}-${{ env.TAG_BUILD }}.apk"
