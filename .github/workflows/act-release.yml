@@ -113,7 +113,7 @@ jobs:
       uses: deep-soft/zip-release@v2
       with:
         type: 'zip'
-        filename: '${{ env.TAG_NAME }}-src'
+        filename: '${{ env.TAG_NAME }}-src-${{ env.PRG_VERSION }}'
         directory: '.'
         path: '.'
         exclusions: '*.git* /*node_modules/* .editorconfig'
